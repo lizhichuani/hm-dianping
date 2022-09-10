@@ -31,9 +31,7 @@ public class RefreshTokenInterceptor implements HandlerInterceptor {
         // 1、获取请求头中的token
         String token = request.getHeader("authorization");
         if(StrUtil.isBlank(token)){
-            // 2、不存在，拦截,返回401状态码
-            response.setStatus(401);
-            return false;
+            return true;
         }
         // 3、基于token获取redis中的用户
         Map<Object, Object> userMap = stringRedisTemplate.opsForHash().entries(RedisConstants.LOGIN_USER_KEY + token);
